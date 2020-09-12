@@ -1,0 +1,37 @@
+.main-btn:pressed {
+    -fx-background-color: #a7a7a7!important;
+}
+
+.main-btn:hover {
+    -fx-background-color: #bababa;
+}
+
+.main-btn {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #e6e6e6;
+}
+
+.scnd-btn:pressed {
+    -fx-background-color: #a7a7a7!important;
+}
+
+.scnd-btn:hover {
+    -fx-background-color: #bababa;
+}
+
+.scnd-btn {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #e6e6e6;
+}
+
+.thrd-btn:pressed {
+    -fx-background-color: #a7a7a7!important;
+}
+
+.thrd-btn:hover {
+    -fx-background-color: #bababa;
+}
+
+.thrd-btn {
+    -fx-background-color: #e6e6e6;
+}
