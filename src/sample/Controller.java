@@ -4,11 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller {
 
+    // TODO SCALE !!!
+    public static final int SCALE = 7;
     @FXML
     private ResourceBundle resources;
 
@@ -22,7 +26,7 @@ public class Controller {
     private Button btnClearAll;
 
     @FXML
-    private Button btnXmultipleX;
+    private Button btnXmultiplyX;
 
     @FXML
     private Button btnRoot;
@@ -100,7 +104,7 @@ public class Controller {
     private Button btnMemMinus;
 
     private String stringNum = "";
-    private float firstNum;
+    private BigDecimal firstNum;
     private char operation;
 
     @FXML
@@ -166,7 +170,7 @@ public class Controller {
         btnClearAll.setOnAction(actionEvent -> {
             labelField.setText("0");
             this.stringNum = "";
-            this.firstNum = 0;
+            this.firstNum = BigDecimal.ZERO;
             this.operation = 'E';
         });
         // +- button = *-1
@@ -204,33 +208,48 @@ public class Controller {
     void equalAction() {
 
         if (this.operation == '+' || this.operation == '-' || this.operation == '/' || this.operation == '*') {
-            float res = 0;
+            BigDecimal res = BigDecimal.ZERO;
+            final BigDecimal value = BigDecimal.valueOf(Double.parseDouble(this.stringNum));
             switch (this.operation) {
-                case '+':
-                    res = this.firstNum + Float.parseFloat(this.stringNum);
-                    break;
-                case '-':
-                    res = this.firstNum - Float.parseFloat(this.stringNum);
-                    break;
-                case '*':
-                    res = this.firstNum * Float.parseFloat(this.stringNum);
-                    break;
-                case '/':
-                    if (Float.parseFloat(this.stringNum) != 0) {
-                        res = this.firstNum / Float.parseFloat(this.stringNum);
-                    } else res = 0;
-                    break;
+                case '+' -> res = this.firstNum.add(value);
+                case '-' -> res = this.firstNum.subtract(value);
+                case '*' -> res = this.firstNum.multiply(value);
+                case '/' -> {
+                    BigDecimal divisor = value;
+                    if (divisor.signum() != 0) {
+                        res = this.firstNum.divide(divisor, SCALE, RoundingMode.HALF_UP);
+                    } else {
+                        res = BigDecimal.ZERO;
+                    }
+                }
             }
-            labelField.setText(Float.toString(res));
+
+            String textToShow = res.toPlainString();
+            if (textToShow.matches("[0-9]+[.][0-9]+[0]+")) {
+                char[] chars = textToShow.toCharArray();
+                int lastIndex = chars.length - 1;
+                for (int i = chars.length - 1; i >= 0; i--) {
+                    if (chars[i] != '0') break;
+                    lastIndex--;
+                }
+
+                StringBuilder tempRes = new StringBuilder();
+                for (int i = 0; i <= lastIndex; i++) {
+                    tempRes.append(chars[i]);
+                }
+                textToShow = tempRes.toString();
+            }
+
+            labelField.setText(textToShow);
             this.operation = 'E';
-            this.firstNum = 0;
+            this.firstNum = BigDecimal.ZERO;
             this.stringNum = "";
         }
     }
 
     void mathAction(char operation) {
         if (this.operation != '+' && this.operation != '-' && this.operation != '/' && this.operation != '*') {
-            this.firstNum = Float.parseFloat(this.stringNum);
+            this.firstNum = BigDecimal.valueOf(Double.parseDouble(this.stringNum));
             labelField.setText(String.valueOf(operation));
             this.stringNum = "";
             this.operation = operation;
