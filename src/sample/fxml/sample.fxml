@@ -38,7 +38,7 @@
                     </font>
                 </Button>
                 <Button fx:id="btnXmultiplyX" layoutX="10.0" layoutY="80.0" mnemonicParsing="false" prefHeight="55.0"
-                        prefWidth="80.0" styleClass="scnd-btn" stylesheets="@../../styles/main.css" text="X * X"
+                        prefWidth="80.0" styleClass="scnd-btn" stylesheets="@../../styles/main.css" text="X*X"
                         textFill="#353535" GridPane.columnIndex="2">
                     <font>
                         <Font name="MS Outlook" size="20.0"/>
