@@ -18,8 +18,8 @@ public class Controller {
     private BigDecimal secondNum;
     private char operation;
 
-    // TODO исправить результат очень больших чесел на е в степени
-    // TODO запоминать промежуточный результат. (2 + 3 = 5, далее + 4 = должо быть 9)
+    // TODO исправить результат очень больших чисел на е в степени
+    //  запоминать промежуточный результат. (2 + 3 = 5, далее + 4 = должно быть 9)
     public static final int SCALE = 7;
     @FXML
     private ResourceBundle resources;
@@ -214,9 +214,6 @@ public class Controller {
             String textToShow = getTextToShow(res);
             this.firstNum = res;
             labelField.setText(textToShow);
-//            this.operation = 'E';
-//            this.firstNum = BigDecimal.ZERO;
-//            this.stringNum = "";
         }
     }
 
@@ -248,13 +245,11 @@ public class Controller {
     }
 
     void mathAction(char operation) {
-//        if (this.operation != '+' && this.operation != '-' && this.operation != '/' && this.operation != '*') {
             secondNum = BigDecimal.ZERO;
             firstNum = BigDecimal.valueOf(Double.parseDouble(this.stringNum));
             labelField.setText(String.valueOf(operation));
             this.stringNum = "";
             this.operation = operation;
-//        }
     }
 
     void addNumber(int number) {
